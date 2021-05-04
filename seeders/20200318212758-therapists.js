@@ -5,19 +5,19 @@ const { SALT_ROUNDS } = require("../config/constants");
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert(
-      "users",
+      "therapists",
       [
         {
-          name: "testuser",
-          email: "test@test.com",
-          password: bcrypt.hashSync("test1234", SALT_ROUNDS),
+          name: "therapist 1",
+          email: "therapist1@clinic.com",
+          password: bcrypt.hashSync("zzz", SALT_ROUNDS),
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          name: "dummy",
-          email: "a@a.com",
-          password: bcrypt.hashSync("a", SALT_ROUNDS),
+          name: "therapist 2",
+          email: "therapist2@clinic.com",
+          password: bcrypt.hashSync("zzz", SALT_ROUNDS),
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -27,6 +27,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete("users", null, {});
+    await queryInterface.bulkDelete("therapists", null, {});
   },
 };
