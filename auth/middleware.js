@@ -16,7 +16,7 @@ async function auth(req, res, next) {
   try {
     const data = toData(auth[1]);
 
-    console.log("data", data);
+    //  console.log("data", data);
 
     let therapist = undefined;
 
@@ -34,8 +34,8 @@ async function auth(req, res, next) {
       });
     }
 
-    console.log("therapist", therapist);
-    console.log("patient", patient);
+    //  console.log("therapist", therapist);
+    //  console.log("patient", patient);
 
     let user = undefined;
 
@@ -49,7 +49,7 @@ async function auth(req, res, next) {
 
     // const user = therapist && patient;
 
-    console.log("user", user);
+    //  console.log("user", user);
 
     if (!user) {
       return res.status(404).send({ message: "User does not exist" });
