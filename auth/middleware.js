@@ -1,4 +1,5 @@
-const User = require("../models").user;
+const Patient = require("../models").patient;
+const Therapist = require("../models").therapist;
 const { toData } = require("./jwt");
 
 async function auth(req, res, next) {
@@ -8,13 +9,48 @@ async function auth(req, res, next) {
   if (!auth || !(auth[0] === "Bearer") || !auth[1]) {
     return res.status(401).send({
       message:
-        "This endpoint requires an Authorization header with a valid token"
+        "This endpoint requires an Authorization header with a valid token",
     });
   }
 
   try {
     const data = toData(auth[1]);
-    const user = await User.findByPk(data.userId);
+
+    console.log("data", data);
+
+    let therapist = undefined;
+
+    let patient = undefined;
+
+    if (data.therapistEmail) {
+      therapist = await Therapist.findOne({
+        where: { email: data.therapistEmail },
+      });
+    }
+
+    if (data.patientEmail) {
+      patient = await Patient.findOne({
+        where: { email: data.patientEmail },
+      });
+    }
+
+    console.log("therapist", therapist);
+    console.log("patient", patient);
+
+    let user = undefined;
+
+    if (therapist !== undefined) {
+      user = therapist;
+    } else if (patient !== undefined) {
+      user = patient;
+    } else {
+      return res.status(404).send({ message: "User does not exist" });
+    }
+
+    // const user = therapist && patient;
+
+    console.log("user", user);
+
     if (!user) {
       return res.status(404).send({ message: "User does not exist" });
     }
@@ -39,7 +75,7 @@ async function auth(req, res, next) {
 
       default:
         return res.status(400).send({
-          message: "Something went wrong, sorry"
+          message: "Something went wrong, sorry",
         });
     }
   }
