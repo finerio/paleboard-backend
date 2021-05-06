@@ -16,11 +16,11 @@ router.post("/", authMiddleware, async (req, res, next) => {
 
   const therapist = req.user;
 
-  console.log("therapist", therapist);
+  //   console.log("therapist", therapist);
 
   const patientId = req.body.patientId;
 
-  console.log("patientId", patientId);
+  //   console.log("patientId", patientId);
 
   if (!therapist || !patientId) {
     return res.status(400).send({
@@ -44,7 +44,7 @@ router.post("/", authMiddleware, async (req, res, next) => {
 router.get("/", authMiddleware, async (req, res, next) => {
   const patient = req.user;
 
-  console.log("patient", patient);
+  //   console.log("patient", patient);
 
   if (!patient) {
     return res.status(400).send({
@@ -57,7 +57,7 @@ router.get("/", authMiddleware, async (req, res, next) => {
       where: { patientId: patient.dataValues.id },
     });
 
-    console.log("session", session);
+    //  console.log("session", session);
 
     return res.status(200).send({ message: "session created", session });
   } catch (error) {

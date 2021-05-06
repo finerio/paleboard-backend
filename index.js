@@ -1,4 +1,5 @@
 const express = require("express");
+const socket = require("socket.io");
 const loggerMiddleWare = require("morgan");
 const corsMiddleWare = require("cors");
 const { PORT } = require("./config/constants");
@@ -159,6 +160,20 @@ app.use("/patients", patientsRouter);
 
 // Listen for connections on specified port (default is port 4000)
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`);
+});
+
+console.log("setting up socket server");
+
+const io = socket(server);
+
+io.on("connection", (socket) => {
+  console.log("new connection:", socket.id); // ojIckSD2jqNzOqIrAGzL
+
+  socket.on("mouse", mouseMsg);
+
+  function mouseMsg(data) {
+    console.log("data", data);
+  }
 });
