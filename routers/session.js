@@ -41,6 +41,31 @@ router.post("/", authMiddleware, async (req, res, next) => {
   }
 });
 
+router.get("/", authMiddleware, async (req, res, next) => {
+  const patient = req.user;
+
+  console.log("patient", patient);
+
+  if (!patient) {
+    return res.status(400).send({
+      message: "patient id not provided",
+    });
+  }
+
+  try {
+    const session = await Session.findOne({
+      where: { patientId: patient.dataValues.id },
+    });
+
+    console.log("session", session);
+
+    return res.status(200).send({ message: "session created", session });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).send({ message: "Something went wrong, sorry" });
+  }
+});
+
 router.delete("/", async (req, res, next) => {
   Session.destroy({
     where: {},
