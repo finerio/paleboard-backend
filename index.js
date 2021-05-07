@@ -174,6 +174,7 @@ io.on("connection", (socket) => {
   socket.on("mouse", mouseMsg);
 
   function mouseMsg(data) {
-    console.log("data", data);
+    //  console.log("data", data);
+    socket.broadcast.emit("mouse", data);
   }
 });
