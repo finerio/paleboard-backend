@@ -10,7 +10,7 @@ module.exports = {
         {
           name: "patient 1",
           email: "patient1@email.com",
-          password: bcrypt.hashSync("zzz", SALT_ROUNDS),
+          password: bcrypt.hashSync("z", SALT_ROUNDS),
           therapistId: 1,
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -18,7 +18,7 @@ module.exports = {
         {
           name: "patient 2",
           email: "patient2@email.com",
-          password: bcrypt.hashSync("zzz", SALT_ROUNDS),
+          password: bcrypt.hashSync("z", SALT_ROUNDS),
           therapistId: 2,
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -26,7 +26,7 @@ module.exports = {
         {
           name: "patient 3",
           email: "patient3@email.com",
-          password: bcrypt.hashSync("zzz", SALT_ROUNDS),
+          password: bcrypt.hashSync("z", SALT_ROUNDS),
           therapistId: 1,
           createdAt: new Date(),
           updatedAt: new Date(),
