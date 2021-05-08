@@ -8,19 +8,16 @@ const Session = require("../models/").session;
 const router = new Router();
 
 router.post("/", authMiddleware, async (req, res, next) => {
-  const allSessions = await Session.findAndCountAll();
+  // delete any previous session, only allowing a single session for now
 
-  if (allSessions && allSessions.length > 1) {
-    return res.status(400).send({ message: "a session already exists" });
-  }
+  Session.destroy({
+    where: {},
+    truncate: true,
+  });
 
   const therapist = req.user;
 
-  console.log("therapist", therapist);
-
   const patientId = req.body.patientId;
-
-  console.log("patientId", patientId);
 
   if (!therapist || !patientId) {
     return res.status(400).send({
@@ -44,8 +41,6 @@ router.post("/", authMiddleware, async (req, res, next) => {
 router.get("/", authMiddleware, async (req, res, next) => {
   const patient = req.user;
 
-  console.log("patient", patient);
-
   if (!patient) {
     return res.status(400).send({
       message: "patient id not provided",
@@ -57,9 +52,11 @@ router.get("/", authMiddleware, async (req, res, next) => {
       where: { patientId: patient.dataValues.id },
     });
 
-    console.log("session", session);
-
-    return res.status(200).send({ message: "session created", session });
+    if (session) {
+      return res.status(200).send({ message: "session retrieved:", session });
+    } else {
+      return res.status(400).send({ message: "no session found" });
+    }
   } catch (error) {
     console.log(error);
     return res.status(400).send({ message: "Something went wrong, sorry" });
