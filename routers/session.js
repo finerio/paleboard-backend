@@ -52,7 +52,11 @@ router.get("/", authMiddleware, async (req, res, next) => {
       where: { patientId: patient.dataValues.id },
     });
 
-    return res.status(200).send({ message: "session created", session });
+    if (session) {
+      return res.status(200).send({ message: "session retrieved:", session });
+    } else {
+      return res.status(400).send({ message: "no session found" });
+    }
   } catch (error) {
     console.log(error);
     return res.status(400).send({ message: "Something went wrong, sorry" });

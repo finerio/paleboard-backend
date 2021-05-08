@@ -169,12 +169,18 @@ console.log("setting up socket server");
 const io = socket(server);
 
 io.on("connection", (socket) => {
-  console.log("new connection:", socket.id); // ojIckSD2jqNzOqIrAGzL
-
-  socket.on("mouse", mouseMsg);
+  console.log("new connection:", socket.id);
 
   function mouseMsg(data) {
-    //  console.log("data", data);
+    //  console.log("mouseMsg(data = ", data);
     socket.broadcast.emit("mouse", data);
   }
+
+  function sessionMsg(data) {
+    console.log("sessionMsg data =", data);
+    socket.broadcast.emit("session", data);
+  }
+
+  socket.on("session", sessionMsg);
+  socket.on("mouse", mouseMsg);
 });
