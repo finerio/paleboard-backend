@@ -112,9 +112,12 @@ router.post("/signup-therapist", async (req, res) => {
 });
 
 router.post("/signup-patient", async (req, res) => {
-  const { email, password, name } = req.body;
-  if (!email || !password || !name) {
-    return res.status(400).send("Please provide an email, password and a name");
+  const { email, password, name, therapistId } = req.body;
+
+  if (!email || !password || !name || !therapistId) {
+    return res
+      .status(400)
+      .send("Please provide an email, password, name, and therapist ID");
   }
 
   // check if this email is already in use in the therapists table:
@@ -134,15 +137,16 @@ router.post("/signup-patient", async (req, res) => {
       email,
       password: bcrypt.hashSync(password, SALT_ROUNDS),
       name,
+      therapistId,
     });
 
-    delete newUser.dataValues["password"]; // don't send back the password hash
+    delete newPatient.dataValues["password"]; // don't send back the password hash
 
     // use email (rather than id) in order to create the token
 
     const token = toJWT({ patientEmail: newPatient.email });
 
-    res.status(201).json({ token, ...newUser.dataValues });
+    res.status(201).json({ token, ...newPatient.dataValues });
   } catch (error) {
     if (error.name === "SequelizeUniqueConstraintError") {
       return res
