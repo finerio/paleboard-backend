@@ -18,6 +18,8 @@ router.post("/", authMiddleware, async (req, res, next) => {
   const therapist = req.user;
 
   const patientId = req.body.patientId;
+  const therapistBrushColor = req.body.therapistBrushColor;
+  const { backgroundColor, patientBrushColor } = req.body;
 
   if (!therapist || !patientId) {
     return res.status(400).send({
@@ -29,6 +31,9 @@ router.post("/", authMiddleware, async (req, res, next) => {
     const session = await Session.create({
       therapistId: req.user.id,
       patientId: patientId,
+      backgroundColor,
+      therapistBrushColor: therapistBrushColor,
+      patientBrushColor,
     });
 
     return res.status(200).send({ message: "session created", session });
@@ -39,19 +44,9 @@ router.post("/", authMiddleware, async (req, res, next) => {
 });
 
 router.get("/", authMiddleware, async (req, res, next) => {
-  //   const patient = req.user;
-
-  //   if (!patient) {
-  //     return res.status(400).send({
-  //       message: "patient id not provided",
-  //     });
-  //   }
-
-  //   const date = req.query.date;
-
   const sessionId = req.query.sessionId;
 
-  console.log("req.body", req.body);
+  console.log("sessionId", sessionId);
 
   if (!sessionId) {
     return res.status(400).send({
