@@ -176,11 +176,17 @@ io.on("connection", (socket) => {
     socket.broadcast.emit("mouse", data);
   }
 
-  function sessionMsg(data) {
-    console.log("sessionMsg data =", data);
-    socket.broadcast.emit("session", data);
+  function sessionMsg(sessionId) {
+    console.log("sessionMsg sessionId =", sessionId);
+    socket.broadcast.emit("session", sessionId);
+  }
+
+  function sessionRequestMsg(patientId) {
+    console.log("sessionRequestMsg patientId =", patientId);
+    socket.broadcast.emit("sessionRequest", patientId);
   }
 
   socket.on("session", sessionMsg);
   socket.on("mouse", mouseMsg);
+  socket.on("sessionRequest", sessionRequestMsg);
 });
