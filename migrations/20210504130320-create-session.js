@@ -1,27 +1,36 @@
-'use strict';
+"use strict";
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('sessions', {
+    await queryInterface.createTable("sessions", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       imageUrl: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+      },
+      backgroundColor: {
+        type: Sequelize.STRING,
+      },
+      therapistBrushColor: {
+        type: Sequelize.STRING,
+      },
+      patientBrushColor: {
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('sessions');
-  }
+    await queryInterface.dropTable("sessions");
+  },
 };
