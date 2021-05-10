@@ -10,10 +10,10 @@ const router = new Router();
 router.post("/", authMiddleware, async (req, res, next) => {
   // delete any previous session, only allowing a single session for now
 
-  Session.destroy({
-    where: {},
-    truncate: true,
-  });
+  //   Session.destroy({
+  //     where: {},
+  //     truncate: true,
+  //   });
 
   const therapist = req.user;
 
@@ -39,17 +39,29 @@ router.post("/", authMiddleware, async (req, res, next) => {
 });
 
 router.get("/", authMiddleware, async (req, res, next) => {
-  const patient = req.user;
+  //   const patient = req.user;
 
-  if (!patient) {
+  //   if (!patient) {
+  //     return res.status(400).send({
+  //       message: "patient id not provided",
+  //     });
+  //   }
+
+  //   const date = req.query.date;
+
+  const sessionId = req.query.sessionId;
+
+  console.log("req.body", req.body);
+
+  if (!sessionId) {
     return res.status(400).send({
-      message: "patient id not provided",
+      message: "session id not provided",
     });
   }
 
   try {
     const session = await Session.findOne({
-      where: { patientId: patient.dataValues.id },
+      where: { id: sessionId },
     });
 
     if (session) {
