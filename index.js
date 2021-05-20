@@ -1,8 +1,13 @@
 const express = require("express");
+const socket = require("socket.io");
 const loggerMiddleWare = require("morgan");
 const corsMiddleWare = require("cors");
 const { PORT } = require("./config/constants");
 const authRouter = require("./routers/auth");
+const sessionRouter = require("./routers/session");
+const patientsRouter = require("./routers/patients");
+const therapistsRouter = require("./routers/therapists");
+
 const authMiddleWare = require("./auth/middleware");
 
 const app = express();
@@ -151,9 +156,39 @@ app.post("/authorized_post_request", authMiddleWare, (req, res) => {
 });
 
 app.use("/", authRouter);
+app.use("/session", sessionRouter);
+app.use("/patients", patientsRouter);
+app.use("/therapists", therapistsRouter);
 
 // Listen for connections on specified port (default is port 4000)
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`);
+});
+
+console.log("setting up socket server");
+
+const io = socket(server);
+
+io.on("connection", (socket) => {
+  console.log("new connection:", socket.id);
+
+  function mouseMsg(data) {
+    //  console.log("mouseMsg(data = ", data);
+    socket.broadcast.emit("mouse", data);
+  }
+
+  function sessionMsg(sessionId) {
+    console.log("sessionMsg sessionId =", sessionId);
+    socket.broadcast.emit("session", sessionId);
+  }
+
+  function sessionRequestMsg(patientId) {
+    console.log("sessionRequestMsg patientId =", patientId);
+    socket.broadcast.emit("sessionRequest", patientId);
+  }
+
+  socket.on("session", sessionMsg);
+  socket.on("mouse", mouseMsg);
+  socket.on("sessionRequest", sessionRequestMsg);
 });

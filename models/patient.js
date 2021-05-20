@@ -8,11 +8,11 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      patient.belongsTo(models.therapist, { as: "patient" });
+      patient.belongsTo(models.therapist, { as: "therapist" });
       patient.belongsToMany(models.therapist, {
-        through: models.session,
-        foreignKey: "userId",
-        as: "sessionPatient",
+        through: "sessions",
+        foreignKey: "patientId",
+        as: "sessionTherapist",
       });
     }
   }
@@ -29,6 +29,10 @@ module.exports = (sequelize, DataTypes) => {
       },
       password: {
         type: DataTypes.STRING,
+        allowNull: false,
+      },
+      therapistId: {
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
     },

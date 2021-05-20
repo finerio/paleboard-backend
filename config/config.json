@@ -1,7 +1,7 @@
 {
   "development": {
-    "url": "postgres://yeszvabn:qhY0-oqpFIokUoLX8w-sJ53X7p2o5DwM@hattie.db.elephantsql.com:5432/yeszvabn",
-    "dialect": "postgres",
+    "url": "",
+    "dialect": "",
     "operatorsAliases": "0"
   },
   "test": {
@@ -13,11 +13,6 @@
     "operatorsAliases": "0"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
-    "dialect": "postgres",
-    "operatorsAliases": "0"
+    "use_env_variable": "DATABASE_URL"
   }
 }

@@ -22,16 +22,28 @@ http GET :4000
 http POST :4000/echo hello="world" number:=0 cheesesArray:='["cheddar", "rochefort", "stilton"]'
 ```
 
-## POST /signup
+## POST /signup-therapist
 
 ```bash
-http POST :4000/signup email="newuser@fastcompany.com" password="test1234" name="John Doe"
+http -v POST :4000/signup-therapist email="therapist10@clinic.com" password="zzz" name="therapist 10"
 ```
 
-## POST /login
+## POST /signup-patient
 
 ```bash
-http POST :4000/login email="test@test.com" password="test1234"
+http -v POST :4000/signup-patient email="patinet10@email.com" password="zzz" name="patient 10"
+```
+
+## POST /login-therapist
+
+```bash
+http -v POST :4000/login-therapist email="therapist1@clinic.com" password="zzz"
+```
+
+## POST /login-patient
+
+```bash
+http -v POST :4000/login-patient email="patient1@email.com" password="zzz"
 ```
 
 ## GET /me
@@ -47,7 +59,7 @@ http GET :4000/me Authorization:"Bearer <PASTE_YOUR_TOKEN_HERE>"
 ```
 
 ```bash
-http GET :4000/me Authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU4NDYwNzIyMSwiZXhwIjoxNTg0NjE0NDIxfQ.PcK4zqUIuA347cW7jdLFSH-86RckZtPw4RFeChwqh2o"
+http GET :4000/me Authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXRpZW50RW1haWwiOiJwYXRpZW50MUBlbWFpbC5jb20iLCJpYXQiOjE2MjAyMTc1NDAsImV4cCI6MTYyMDIyNDc0MH0.goUv70sQByixCzwTbM3LdRAUQpKMTaRDMEnfSD9VA5Y"
 ```
 
 ## POST /authorized_post_request

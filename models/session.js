@@ -15,6 +15,18 @@ module.exports = (sequelize, DataTypes) => {
   session.init(
     {
       imageUrl: DataTypes.STRING,
+      backgroundColor: {
+        type: DataTypes.STRING,
+        defaultValue: "#f0e6df",
+      },
+      therapistBrushColor: {
+        type: DataTypes.STRING,
+        defaultValue: "#ffffff",
+      },
+      patientBrushColor: {
+        type: DataTypes.STRING,
+        defaultValue: "#000000",
+      },
     },
     {
       sequelize,
